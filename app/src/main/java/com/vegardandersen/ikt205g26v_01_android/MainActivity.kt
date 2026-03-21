@@ -36,8 +36,7 @@ class MainActivity : ComponentActivity() {
                             onDelete = { note ->
                                 val index = viewModel.notes.indexOf(note)
                                 viewModel.deleteNote(index)
-                            }
-                        )
+                            })
                     }
 
                     composable("new_note") {
@@ -45,7 +44,7 @@ class MainActivity : ComponentActivity() {
                             onSave = { title, description ->
                                 viewModel.addNote(title, description)
                                 navController.popBackStack()
-                            })
+                            }, onBackClick = { navController.popBackStack() })
                     }
 
                     composable("details/{index}") { backStackEntry ->
@@ -54,7 +53,7 @@ class MainActivity : ComponentActivity() {
                         val note = viewModel.notes.getOrNull(index)
 
                         if (note != null) {
-                            DetailsScreen(note = note)
+                            DetailsScreen(note = note, onBackClick = { navController.popBackStack() })
                         }
                     }
                 }
